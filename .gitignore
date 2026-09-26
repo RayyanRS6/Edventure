@@ -1,0 +1,24 @@
+node_modules/
+dist/
+build/
+coverage/
+.next/
+.expo/
+.turbo/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+# Local embedded PostgreSQL cluster and uploaded files used in development
+.data/
+# Expo / native
+apps/mobile/android/
+apps/mobile/ios/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+npm-debug.log*
+.DS_Store
+Thumbs.db

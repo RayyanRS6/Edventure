@@ -1,0 +1,50 @@
+{
+  "name": "@edventure/api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The single Edventure backend: REST API (/api/v1) for the admin website and the mobile app, plus the background worker.",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch --clear-screen=false src/server.ts",
+    "worker": "tsx watch --clear-screen=false src/worker.ts",
+    "start": "node dist/server.js",
+    "start:worker": "node dist/worker.js",
+    "build": "node scripts/build.mjs",
+    "db:start": "tsx scripts/dev-db.ts",
+    "db:migrate": "tsx scripts/migrate.ts",
+    "db:generate": "drizzle-kit generate && node scripts/qualify-enums.mjs",
+    "db:seed": "tsx scripts/seed.ts",
+    "provision:school": "tsx scripts/provision-school.ts",
+    "openapi": "tsx scripts/openapi.ts",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@edventure/contracts": "*",
+    "@edventure/i18n": "*",
+    "@fastify/cookie": "^11.0.2",
+    "@fastify/cors": "^11.1.0",
+    "@fastify/rate-limit": "^10.3.0",
+    "@fastify/swagger": "^9.5.2",
+    "@supabase/supabase-js": "^2.117.2",
+    "csv-parse": "^6.1.0",
+    "csv-stringify": "^6.6.0",
+    "decimal.js": "^10.6.0",
+    "drizzle-orm": "^0.45.3",
+    "fastify": "^5.12.5",
+    "fastify-type-provider-zod": "^7.0.0",
+    "jose": "^6.2.12",
+    "otpauth": "^9.5.2",
+    "pg-boss": "^12.35.0",
+    "playwright-core": "^1.63.0",
+    "postgres": "^3.4.9",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.11",
+    "embedded-postgres": "17.10.0-beta.17",
+    "esbuild": "^0.28.2",
+    "tsx": "^4.23.15",
+    "vitest": "^5.0.2"
+  }
+}

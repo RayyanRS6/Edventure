@@ -1,0 +1,22 @@
+{
+  "name": "@edventure/contracts",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shared request/response contracts, validation schemas and domain constants used by the backend and every frontend.",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "vitest": "^5.0.2"
+  }
+}

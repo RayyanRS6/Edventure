@@ -1,0 +1,28 @@
+{
+  "name": "edventure",
+  "private": true,
+  "description": "Edventure school management platform: one shared backend for the admin website and the Android/iOS app.",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "db:start": "npm run db:start -w @edventure/api",
+    "db:migrate": "npm run db:migrate -w @edventure/api",
+    "db:seed": "npm run db:seed -w @edventure/api",
+    "dev:api": "npm run dev -w @edventure/api",
+    "dev:worker": "npm run worker -w @edventure/api",
+    "dev:web": "npm run dev -w @edventure/web",
+    "dev:mobile": "npm run start -w @edventure/mobile",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present"
+  },
+  "engines": {
+    "node": ">=22.12"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "~6.0.3"
+  }
+}

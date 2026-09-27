@@ -7,7 +7,7 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../package.json', import.meta.ur
 const external = Object.keys(pkg.dependencies).filter((d) => !d.startsWith('@edventure/'));
 
 await build({
-  entryPoints: { server: 'src/server.ts', worker: 'src/worker.ts' },
+  entryPoints: { server: 'src/server.ts', worker: 'src/worker.ts', migrate: 'scripts/migrate.ts' },
   outdir: 'dist',
   bundle: true,
   platform: 'node',
@@ -17,4 +17,4 @@ await build({
   external: [...external, ...external.map((d) => `${d}/*`)],
   banner: { js: "import { createRequire } from 'module'; const require = createRequire(import.meta.url);" },
 });
-console.log('Built dist/server.js and dist/worker.js');
+console.log('Built dist/server.js, dist/worker.js and dist/migrate.js');

@@ -1,0 +1,123 @@
+# Render Blueprint for one Edventure environment (duplicate per staging/production).
+# One backend (edventure-api + edventure-worker, same codebase) serves the admin website and the
+# mobile app. The website is UI only and proxies /api to the API over Render's private network.
+# Secrets marked `sync: false` are entered in the Render dashboard, never committed.
+
+services:
+  - type: web
+    name: edventure-api
+    runtime: node
+    region: singapore
+    plan: standard
+    buildCommand: npm ci --include=dev --workspace @edventure/api --include-workspace-root && npm run build -w @edventure/api
+    # Additive, backward-compatible migrations run before each release goes live.
+    preDeployCommand: npm run start:migrate -w @edventure/api
+    startCommand: npm run start -w @edventure/api
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: '22'
+      - key: PORT
+        value: '4000'
+      - key: LOG_LEVEL
+        value: info
+      - key: DATABASE_URL # edventure_app role (no BYPASSRLS), Supabase pooler, transaction mode
+        sync: false
+      - key: DATABASE_OWNER_URL # owner role: migrations, provisioning, job-queue schema
+        sync: false
+      - key: DATABASE_POOL_MAX
+        value: '10'
+      - key: AUTH_PROVIDER
+        value: supabase
+      - key: STORAGE_PROVIDER
+        value: supabase
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_STORAGE_BUCKET
+        value: edventure-private
+      - key: AUTH_IDENTITY_DOMAIN
+        sync: false
+      - key: PUBLIC_API_URL # e.g. https://api.example.com (used by the mobile app too)
+        sync: false
+      - key: WEB_ORIGINS # e.g. https://admin.example.com
+        sync: false
+      - key: COOKIE_SECURE
+        value: 'true'
+      - key: EXPO_ACCESS_TOKEN
+        sync: false
+      - key: MIN_MOBILE_VERSION
+        value: 1.0.0
+
+  - type: worker
+    name: edventure-worker
+    runtime: docker
+    region: singapore
+    plan: standard
+    dockerfilePath: ./apps/api/Dockerfile.worker
+    dockerContext: .
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_OWNER_URL
+        sync: false
+      - key: AUTH_PROVIDER
+        value: supabase
+      - key: STORAGE_PROVIDER
+        value: supabase
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_STORAGE_BUCKET
+        value: edventure-private
+      - key: AUTH_IDENTITY_DOMAIN
+        sync: false
+      - key: PUBLIC_API_URL
+        sync: false
+      - key: EXPO_ACCESS_TOKEN
+        sync: false
+      - key: CLAMAV_HOST # malware scanner on the private network
+        fromService:
+          type: pserv
+          name: edventure-clamav
+          property: host
+      - key: CLAMAV_PORT
+        value: '3310'
+
+  # Uploads stay quarantined until this scanner reports them clean.
+  - type: pserv
+    name: edventure-clamav
+    runtime: image
+    image:
+      url: docker.io/clamav/clamav:stable
+    region: singapore
+    plan: standard
+
+  - type: web
+    name: edventure-web
+    runtime: node
+    region: singapore
+    plan: standard
+    buildCommand: npm ci --include=dev --workspace @edventure/web --include-workspace-root && npm run build -w @edventure/web
+    startCommand: cd apps/web && npx next start --port $PORT
+    healthCheckPath: /login
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: '22'
+      - key: EDVENTURE_API_ORIGIN # needed at build time too: the /api rewrite is compiled in
+        fromService:
+          type: web
+          name: edventure-api
+          property: hostport

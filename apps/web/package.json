@@ -1,0 +1,37 @@
+{
+  "name": "@edventure/web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Edventure admin website. Frontend only: every request goes to the shared Edventure API.",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --port 3000",
+    "build": "next build",
+    "start": "next start --port 3000",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@edventure/api-client": "*",
+    "@edventure/contracts": "*",
+    "@edventure/design-tokens": "*",
+    "@edventure/i18n": "*",
+    "@radix-ui/react-select": "^2.3.7",
+    "@tanstack/react-query": "^5.104.0",
+    "clsx": "^2.1.1",
+    "i18next": "^26.4.2",
+    "lucide-react": "^1.48.0",
+    "next": "16.3.6",
+    "qrcode": "^1.5.4",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-i18next": "^17.0.15"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/qrcode": "^1.5.5",
+    "@types/react": "~19.2.2",
+    "@types/react-dom": "~19.2.2",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.3.3"
+  }
+}

@@ -9,6 +9,7 @@
     "worker": "tsx watch --clear-screen=false src/worker.ts",
     "start": "node dist/server.js",
     "start:worker": "node dist/worker.js",
+    "start:migrate": "node dist/migrate.js",
     "build": "node scripts/build.mjs",
     "db:start": "tsx scripts/dev-db.ts",
     "db:migrate": "tsx scripts/migrate.ts",

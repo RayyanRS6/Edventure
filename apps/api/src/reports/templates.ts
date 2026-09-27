@@ -21,12 +21,12 @@ export function layout(locale: AppLocale, title: string, body: string, school: {
 <meta charset="utf-8" />
 <title>${esc(title)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet" />
 <style>
   :root { --ink:#16202a; --muted:#5b6673; --line:#d9dee4; --accent:#0f6e5a; --bad:#b42318; }
   * { box-sizing: border-box; }
-  body { font-family: Inter, 'Noto Nastaliq Urdu', sans-serif; color: var(--ink); font-size: 11px; margin: 0; }
-  [lang='ur'], .ur { font-family: 'Noto Nastaliq Urdu', Inter, serif; line-height: 2.1; }
+  body { font-family: 'DM Sans', 'Noto Nastaliq Urdu', sans-serif; color: var(--ink); font-size: 11px; margin: 0; }
+  [lang='ur'], .ur { font-family: 'Noto Nastaliq Urdu', 'DM Sans', serif; line-height: 2.1; }
   header { display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid var(--accent); padding-bottom:8px; margin-bottom:14px; }
   h1 { font-size: 18px; margin: 0; }
   h2 { font-size: 13px; margin: 18px 0 8px; color: var(--accent); }

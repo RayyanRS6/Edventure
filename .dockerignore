@@ -1,0 +1,17 @@
+.git
+**/node_modules
+**/dist
+**/.next
+**/.expo
+.data
+coverage
+*.log
+**/.env
+**/.env.*
+!**/.env.example
+Mood board and design
+# The lockfile covers every workspace, so keep each package.json but skip the app sources.
+apps/mobile/*
+!apps/mobile/package.json
+apps/web/*
+!apps/web/package.json

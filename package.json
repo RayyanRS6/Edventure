@@ -14,6 +14,7 @@
     "dev:worker": "npm run worker -w @edventure/api",
     "dev:web": "npm run dev -w @edventure/web",
     "dev:mobile": "npm run start -w @edventure/mobile",
+    "check:i18n": "tsx scripts/check-i18n.mts",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
     "build": "npm run build --workspaces --if-present"
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
+    "tsx": "^4.23.15",
     "typescript": "~6.0.3"
   }
 }

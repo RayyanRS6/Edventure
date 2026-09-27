@@ -26,7 +26,7 @@ export class ApiError extends Error {
   readonly details?: Record<string, unknown>;
   readonly requestId?: string;
 
-  constructor(status: number, body: Partial<ApiErrorBody> & { code?: ErrorCode | 'network' }) {
+  constructor(status: number, body: Omit<Partial<ApiErrorBody>, 'code'> & { code?: ErrorCode | 'network' }) {
     super(body.message ?? 'Request failed');
     this.name = 'ApiError';
     this.status = status;

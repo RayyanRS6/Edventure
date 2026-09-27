@@ -1,0 +1,25 @@
+# Edventure background worker (same codebase as the API, `worker` entry point).
+# It renders PDFs with Chromium, so it starts from the Playwright image whose browser build matches
+# the pinned playwright-core version. Build context: the repository root.
+#
+#   docker build -f apps/api/Dockerfile.worker -t edventure-worker .
+
+FROM mcr.microsoft.com/playwright:v1.63.0-noble AS build
+WORKDIR /repo
+COPY . .
+RUN npm ci --include=dev --workspace @edventure/api --include-workspace-root \
+ && npm run build -w @edventure/api \
+ && npm prune --omit=dev --workspace @edventure/api --include-workspace-root
+
+FROM mcr.microsoft.com/playwright:v1.63.0-noble
+ENV NODE_ENV=production
+WORKDIR /repo
+COPY --from=build /repo/package.json /repo/package-lock.json ./
+COPY --from=build /repo/node_modules ./node_modules
+COPY --from=build /repo/packages ./packages
+COPY --from=build /repo/apps/api/package.json ./apps/api/package.json
+COPY --from=build /repo/apps/api/dist ./apps/api/dist
+COPY --from=build /repo/apps/api/migrations ./apps/api/migrations
+WORKDIR /repo/apps/api
+USER pwuser
+CMD ["node", "dist/worker.js"]

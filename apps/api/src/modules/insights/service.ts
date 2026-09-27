@@ -77,10 +77,10 @@ export class InsightsService {
       const actions: ActionItem[] = [
         { kind: 'roll_call_missing' as const, count: missingRollCalls, link: '/attendance', priority: 1 },
         { kind: 'leave_pending' as const, count: counts?.['leave'] ?? 0, link: '/leave?state=pending', priority: 2 },
-        { kind: 'provisioning_failed' as const, count: counts?.['provisioning'] ?? 0, link: '/people/students?accountStatus=pending', priority: 3 },
+        { kind: 'provisioning_failed' as const, count: counts?.['provisioning'] ?? 0, link: '/students?accountStatus=pending', priority: 3 },
         { kind: 'import_review' as const, count: counts?.['imports'] ?? 0, link: '/imports', priority: 4 },
         { kind: 'exam_review' as const, count: counts?.['exams'] ?? 0, link: '/exams', priority: 5 },
-        { kind: 'results_draft' as const, count: counts?.['results'] ?? 0, link: '/exams/results', priority: 6 },
+        { kind: 'results_draft' as const, count: counts?.['results'] ?? 0, link: '/results', priority: 6 },
         { kind: 'unallocated_receipts' as const, count: dec(fees.unallocatedReceipts).gt(0) ? 1 : 0, link: '/fees/payments?unallocated=true', priority: 7 },
       ]
         .filter((a) => a.count > 0)

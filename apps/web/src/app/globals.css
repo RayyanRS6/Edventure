@@ -1,0 +1,133 @@
+@import 'tailwindcss';
+
+/* Design tokens mirror @edventure/design-tokens across web and mobile. */
+@theme {
+  --color-accent-50: #f1edff;
+  --color-accent-100: #e4dcff;
+  --color-accent-200: #cbbeff;
+  --color-accent-500: #8168e8;
+  --color-accent-600: #6c52d5;
+  --color-accent-700: #523cb4;
+  --color-accent-800: #3b2b83;
+  --color-brand-lilac: #bca8f4;
+  --color-brand-lime: #d9f56b;
+  --color-brand-apricot: #ffc67e;
+  --color-brand-pink: #f5c0e8;
+  --color-brand-night: #202030;
+  --color-ink: #202030;
+  --color-ink-soft: #414255;
+  --color-muted: #626579;
+  --color-subtle: #9295a6;
+  --color-line: #e9e7ef;
+  --color-line-strong: #d5d2e0;
+  --color-canvas: #f7f6f3;
+  --color-surface: #ffffff;
+  --color-sunken: #f1eff8;
+  --color-success-fg: #146c43;
+  --color-success-bg: #e6f4ec;
+  --color-warning-fg: #8a4b06;
+  --color-warning-bg: #fdf1de;
+  --color-danger-fg: #b42318;
+  --color-danger-bg: #fdecea;
+  --color-info-fg: #1f4f99;
+  --color-info-bg: #e7effb;
+  --color-neutral-fg: #46515c;
+  --color-neutral-bg: #eef1f4;
+  --font-sans: var(--font-dm-sans), var(--font-urdu-face), ui-sans-serif, system-ui, sans-serif;
+  --font-urdu: var(--font-urdu-face), var(--font-dm-sans), serif;
+  --radius-card: 22px;
+}
+
+html {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  min-height: 100dvh;
+}
+
+/* Quiet, narrow scrollbars for the page and scrollable panels. */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-track,
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: #c2bad6;
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #a99aca;
+}
+*::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0;
+  height: 0;
+}
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #c2bad6 transparent;
+  }
+}
+
+::selection { background: var(--color-brand-lime); color: var(--color-ink); }
+
+.brand-display { font-weight: 800; line-height: 1.04; letter-spacing: -0.045em; }
+.brand-card { border: 1px solid var(--color-line); border-radius: var(--radius-card); background: var(--color-surface); box-shadow: 0 8px 30px rgb(32 32 48 / 0.035); }
+.brand-hero { border-radius: 30px; background: var(--color-brand-lilac); color: var(--color-ink); overflow: hidden; }
+.brand-hero-mark { position: absolute; border: 22px solid var(--color-brand-lime); border-radius: 36%; transform: rotate(-26deg); opacity: .9; }
+
+/* Urdu (Nastaliq) needs taller lines and a slightly larger size to stay legible. */
+html[lang='ur'] body {
+  font-family: var(--font-urdu);
+  line-height: 2;
+  font-size: 15px;
+}
+html[lang='ur'] .tabular,
+html[lang='ur'] input,
+html[lang='ur'] code {
+  font-family: var(--font-dm-sans), sans-serif;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Let the dashboard navigation scroll without a visible gutter or width shift. */
+.sidebar-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.sidebar-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent-500);
+  outline-offset: 2px;
+}
+
+dialog::backdrop {
+  background: rgb(21 32 43 / 0.45);
+}
+
+@media print {
+  .app-shell { height: auto; overflow: visible; }
+  .app-content-scroll { overflow: visible; }
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: white;
+  }
+}

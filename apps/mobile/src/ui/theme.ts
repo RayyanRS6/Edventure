@@ -26,3 +26,23 @@ export const shadow = {
   shadowOffset: { width: 0, height: 5 },
   elevation: 2,
 } as const;
+
+export const darkTheme = {
+  canvas: '#12111A',
+  surface: '#1A1926',
+  card: '#1F1E2E',
+  cardBorder: 'rgba(255, 255, 255, 0.08)',
+  cardBorderActive: 'rgba(212, 255, 50, 0.45)',
+  lime: '#D4FF32',
+  limeDim: 'rgba(212, 255, 50, 0.15)',
+  limeText: '#12111A',
+  violet: '#7C3AED',
+  violetGlow: 'rgba(124, 58, 237, 0.35)',
+  violetDim: 'rgba(124, 58, 237, 0.18)',
+  textPrimary: '#FFFFFF',
+  textSecondary: '#A5A2B8',
+  textMuted: '#68657B',
+  dockBg: '#1C1B28',
+  dockBorder: 'rgba(255, 255, 255, 0.12)',
+} as const;
+

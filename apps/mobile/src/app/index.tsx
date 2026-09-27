@@ -11,7 +11,7 @@ export default function Index() {
   const { t } = useTranslation();
   const { status, next, experience } = useSession();
   if (status === 'loading') return <Loading />;
-  if (status === 'signedOut') return <Redirect href="/login" />;
+  if (status === 'signedOut') return <Redirect href="/welcome" />;
   if (next === 'change_password') return <Redirect href="/change-password" />;
   if (next === 'mfa_enroll' || next === 'mfa_verify') return <Redirect href="/mfa" />;
   if (!experience) {

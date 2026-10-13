@@ -1,5 +1,7 @@
 # Edventure
 
+> **Status:** in active development. The API, admin website and mobile app are all being built in this repo.
+
 School management for administrators, teachers and students: attendance, timetables, homework and
 quizzes, exams and results, promotion, fees and bank reconciliation, announcements and reports —
 in English and Urdu (right-to-left).

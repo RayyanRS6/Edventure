@@ -3,6 +3,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { handlers } from '../../src/jobs/handlers';
 import { PushService } from '../../src/modules/communications/push';
 import { actorForAccount } from '../../src/platform/actor-loader';
+import { addDays } from '../../src/platform/dates';
 import { client, createTestApp, type TestApp } from '../support/app';
 import { ok, schoolFixture, TODAY, YEAR_START, type SchoolFixture } from '../support/fixtures';
 import { uploadFile } from '../support/files';
@@ -154,6 +155,18 @@ describe('dashboards, search and audit', () => {
     expect(events.items.some((e: any) => e.action === 'student.created' && e.actor === 'Principal')).toBe(true);
     const denied = await f.teachers.teacherA.client.get('/audit-events');
     expect(denied.statusCode).toBe(403);
+  });
+
+  it('filters audit events by an action containing LIKE wildcard characters', async () => {
+    // Future dates so the suspension never takes effect for later tests.
+    const suspension = await ok(f.admin.post(`/students/${f.students.ali.id}/suspensions`, { startDate: addDays(TODAY, 30), endDate: addDays(TODAY, 31), reason: 'Conduct' }));
+    await ok(f.admin.post(`/suspensions/${suspension.id}/revoke`, { reason: 'Entered in error' }));
+    const actions = async (action: string) => (await ok(f.admin.get(`/audit-events?action=${encodeURIComponent(action)}&limit=100`))).items.map((e: any) => e.action);
+    expect(await actions('student.suspension_revoked')).toEqual(['student.suspension_revoked']);
+    expect(await actions('Student.Suspension_')).toEqual(['student.suspension_revoked']);
+    // `_` and `%` are literal, not wildcards.
+    expect(await actions('student_suspension_revoked')).toEqual([]);
+    expect(await actions('student.%revoked')).toEqual([]);
   });
 });
 

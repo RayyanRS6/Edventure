@@ -232,7 +232,7 @@ export class InsightsService {
       if (q.entityType) conditions.push(eq(auditEvents.entityType, q.entityType));
       if (q.entityId) conditions.push(eq(auditEvents.entityId, q.entityId));
       if (q.actorAccountId) conditions.push(eq(auditEvents.actorAccountId, q.actorAccountId));
-      if (q.action) conditions.push(sql`${auditEvents.action} like ${`${q.action.replace(/[%_\\]/g, '')}%`}`);
+      if (q.action) conditions.push(sql`${auditEvents.action} ilike ${`${q.action.replace(/[%_\\]/g, (m) => `\\${m}`)}%`}`);
       if (q.from) conditions.push(gte(auditEvents.occurredAt, new Date(`${q.from}T00:00:00Z`)));
       if (q.to) conditions.push(lte(auditEvents.occurredAt, new Date(`${addDays(q.to, 1)}T00:00:00Z`)));
       const cursor = decodeCursor(q.cursor, 2) as [string, string] | null;

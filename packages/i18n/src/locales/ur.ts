@@ -77,6 +77,8 @@ export const ur: Messages = {
     schoolCode: 'اسکول کوڈ',
     username: 'صارف نام',
     password: 'پاس ورڈ',
+    showPassword: 'پاس ورڈ دکھائیں',
+    hidePassword: 'پاس ورڈ چھپائیں',
     currentPassword: 'موجودہ پاس ورڈ',
     newPassword: 'نیا پاس ورڈ',
     confirmPassword: 'نئے پاس ورڈ کی تصدیق',

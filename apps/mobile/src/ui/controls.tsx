@@ -136,25 +136,41 @@ export function TextField({
   style,
   ...input
 }: TextInputProps & { label: string; error?: string; hint?: string }) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const urdu = i18n.language === 'ur';
+  const secret = !!input.secureTextEntry;
+  const [revealed, setRevealed] = useState(false);
   return (
     <View style={{ gap: 6 }}>
       <Text variant="small" weight="500" tone="soft">
         {label}
       </Text>
-      <TextInput
-        accessibilityLabel={label}
-        placeholderTextColor={colors.subtle}
-        style={[
-          styles.input,
-          { fontFamily: urdu ? fontFamily.urdu['400'] : fontFamily.latin['400'] },
-          input.multiline && { minHeight: 96, textAlignVertical: 'top', paddingTop: 10 },
-          error ? { borderColor: colors.danger.fg } : null,
-          style,
-        ]}
-        {...input}
-      />
+      <View>
+        <TextInput
+          accessibilityLabel={label}
+          placeholderTextColor={colors.subtle}
+          style={[
+            styles.input,
+            { fontFamily: urdu ? fontFamily.urdu['400'] : fontFamily.latin['400'] },
+            input.multiline && { minHeight: 96, textAlignVertical: 'top', paddingTop: 10 },
+            secret && { paddingEnd: touchTarget },
+            error ? { borderColor: colors.danger.fg } : null,
+            style,
+          ]}
+          {...input}
+          secureTextEntry={secret && !revealed}
+        />
+        {secret && (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={revealed ? t('auth.hidePassword') : t('auth.showPassword')}
+            onPress={() => setRevealed((v) => !v)}
+            style={styles.reveal}
+          >
+            <Ionicons name={revealed ? 'eye-off-outline' : 'eye-outline'} size={20} color={colors.muted} />
+          </Pressable>
+        )}
+      </View>
       {error ? (
         <Text variant="caption" tone="danger">
           {error}
@@ -331,6 +347,7 @@ const styles = StyleSheet.create({
     color: colors.ink,
     fontSize: 16,
   },
+  reveal: { position: 'absolute', end: 0, top: 0, bottom: 0, width: touchTarget, alignItems: 'center', justifyContent: 'center' },
   choice: { flexDirection: 'row', alignItems: 'center', gap: spacing[2] },
   backdrop: { flex: 1, backgroundColor: 'rgba(21,32,43,0.35)' },
   sheet: { maxHeight: '70%', backgroundColor: colors.surface, borderTopLeftRadius: radius.xl, borderTopRightRadius: radius.xl },

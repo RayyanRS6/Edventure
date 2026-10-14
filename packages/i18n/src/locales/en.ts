@@ -75,6 +75,8 @@ export const en = {
     schoolCode: 'School code',
     username: 'Username',
     password: 'Password',
+    showPassword: 'Show password',
+    hidePassword: 'Hide password',
     currentPassword: 'Current password',
     newPassword: 'New password',
     confirmPassword: 'Confirm new password',
